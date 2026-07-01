@@ -1,0 +1,19 @@
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# PowerPoint temp files
+~$*.pptx
+
+# Demo output / temp files
+classroom_lecture.srt
+agent_definition_highlight.mp4
+demos/quiz.html
