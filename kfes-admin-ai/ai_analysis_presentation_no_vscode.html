@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>光復國小行政 AI 應用與分類簡報 (教師精簡版)</title>
+  <!-- Google Fonts: Inter & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #f1f5f9;
+      --bg-slide: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-light: #94a3b8;
+      
+      --primary: #1e3a8a;
+      --primary-light: #3b82f6;
+      --primary-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      
+      --accent: #0ea5e9;
+      --accent-gradient: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+      --accent-light: rgba(14, 165, 233, 0.1);
+      
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.06), 0 4px 6px -4px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      background-color: var(--bg-slide);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      height: 60px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-tag {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-weight: 700;
+      border: 1px solid rgba(14, 165, 233, 0.2);
+    }
+
+    .controls-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .help-tooltip {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .help-key {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+
+    .btn-print {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-print:hover {
+      background: var(--bg-main);
+      color: var(--primary);
+      border-color: var(--primary-light);
+    }
+
+    /* ── Main Container ── */
+    .deck-container {
+      flex: 1;
+      position: relative;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar Navigation ── */
+    aside.sidebar {
+      width: 280px;
+      background-color: var(--bg-slide);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      overflow-y: auto;
+      transition: transform var(--transition-normal);
+    }
+
+    .sidebar-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
+
+    .slide-menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slide-menu-item {
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 3px solid transparent;
+    }
+
+    .slide-menu-item:hover {
+      background-color: var(--bg-main);
+      color: var(--primary);
+    }
+
+    .slide-menu-item.active {
+      background-color: rgba(30, 58, 138, 0.05);
+      color: var(--primary);
+      font-weight: 600;
+      border-left-color: var(--primary-light);
+    }
+
+    .slide-menu-item span.num {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      width: 20px;
+    }
+
+    /* ── Slide Frame ── */
+    .slide-stage {
+      flex: 1;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      overflow: hidden;
+    }
+
+    .slide-viewport {
+      width: 100%;
+      max-width: 1150px;
+      height: 100%;
+      max-height: 700px;
+      position: relative;
+      background-color: var(--bg-slide);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Slide Styling ── */
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(30px);
+      transition: opacity var(--transition-normal), transform var(--transition-normal), visibility var(--transition-normal);
+      z-index: 1;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      z-index: 2;
+    }
+
+    .slide.prev-active {
+      transform: translateX(-30px);
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.03) 0%, rgba(255, 255, 255, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .slide-header {
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .slide-tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .slide h2 {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+    }
+
+    .slide-body {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .slide-footer {
+      height: 30px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-light);
+      padding-top: 10px;
+      z-index: 1;
+      margin-top: 10px;
+    }
+
+    /* ── Grid/Layout Utilities ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      height: 100%;
+    }
+
+    .grid-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* ── Cover Slide ── */
+    .slide-cover {
+      background: var(--primary-gradient);
+      color: #ffffff;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 64px;
+    }
+
+    .slide-cover::before {
+      display: none;
+    }
+
+    .cover-content {
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .cover-badge {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #e0f2fe;
+    }
+
+    .slide-cover h1 {
+      font-size: 3.8rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      color: #ffffff;
+      text-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+      margin: 10px 0;
+    }
+
+    .cover-subtitle {
+      font-size: 1.65rem;
+      color: #93c5fd;
+      font-weight: 300;
+      max-width: 750px;
+      line-height: 1.6;
+    }
+
+    .cover-divider {
+      width: 100px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin: 15px 0;
+    }
+
+    .cover-meta {
+      font-size: 1.15rem;
+      color: #bfdbfe;
+      margin-top: 30px;
+      display: flex;
+      gap: 24px;
+    }
+
+    /* ── Card Styles ── */
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-light);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .card.accent::before {
+      background: var(--accent);
+    }
+
+    .card.success::before {
+      background: var(--success);
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+
+    .card-text {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .card-list {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 6px;
+    }
+
+    .card-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .card-list li::before {
+      content: '✦';
+      color: var(--accent);
+    }
+
+    .card-link {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: auto;
+      padding: 5px 10px;
+      background: var(--bg-main);
+      border-radius: var(--radius-sm);
+      align-self: flex-start;
+      border: 1px solid var(--border-color);
+      transition: all var(--transition-fast);
+    }
+
+    .card-link:hover {
+      background: var(--primary-light);
+      color: #ffffff;
+      border-color: var(--primary-light);
+    }
+
+    /* ── Image Presentation Card ── */
+    .img-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .img-wrapper {
+      position: relative;
+      flex: 1;
+      background: #f8fafc;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .img-wrapper img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform var(--transition-normal);
+    }
+
+    .img-wrapper:hover img {
+      transform: scale(1.03);
+    }
+
+    .img-label {
+      padding: 12px 16px;
+      background: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .img-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* ── Bottom Controls ── */
+    .deck-controls {
+      height: 60px;
+      background-color: var(--bg-slide);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      z-index: 10;
+    }
+
+    .btn-control {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-control:hover {
+      background-color: var(--bg-main);
+      color: var(--primary);
+    }
+
+    .btn-control:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .slide-progress-container {
+      flex: 1;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slide-counter {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-main);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary-gradient);
+      width: 0%;
+      transition: width var(--transition-fast);
+    }
+
+    /* ── Print Styles ── */
+    @media print {
+      body { overflow: visible; height: auto; background-color: #ffffff; }
+      header, .deck-controls, aside.sidebar { display: none !important; }
+      .deck-container { display: block; overflow: visible; }
+      .slide-stage { padding: 0; display: block; overflow: visible; }
+      .slide-viewport { box-shadow: none; border-radius: 0; max-width: 100%; max-height: none; height: auto; display: block; overflow: visible; }
+      .slide { position: relative; display: flex !important; opacity: 1 !important; visibility: visible !important; transform: none !important; page-break-after: always; height: 100vh; padding: 30px; }
+      .slide:last-child { page-break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header>
+    <div class="brand-title">
+      <span>🏫 光復國小行政團隊</span>
+      <span class="brand-tag">AI 應用實務分類簡報</span>
+    </div>
+    <div class="controls-top">
+      <div class="help-tooltip">
+        <span>導覽方法：</span>
+        <span class="help-key">←</span>
+        <span class="help-key">→</span>
+        <span>或</span>
+        <span class="help-key">Space</span>
+      </div>
+      <button class="btn-print" onclick="window.print()">
+        <span>🖨️ 列印 / 儲存 PDF</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Deck Container -->
+  <div class="deck-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-title">分類大綱</div>
+      <ul class="slide-menu-list">
+        <li class="slide-menu-item active" onclick="goToSlide(0)">
+          <span class="num">01</span><span>封面首頁</span>
+        </li>
+        <li class="slide-menu-item" onclick="goToSlide(1)">
+          <span class="num">02</span><span>一、AI 圖文的生成</span>
+        </li>
+        <li class="slide-menu-item" onclick="goToSlide(2)">
+          <span class="num">03</span><span>二、AI Vibe Coding 網頁</span>
+        </li>
+        <li class="slide-menu-item" onclick="goToSlide(3)">
+          <span class="num">04</span><span>三、AI Agent 應用</span>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Slide Viewport -->
+    <main class="slide-stage">
+      <div class="slide-viewport">
+
+        <!-- SLIDE 1: Cover -->
+        <div class="slide slide-cover active">
+          <div class="cover-content">
+            <span class="cover-badge">KFES ADMINISTRATIVE AI CLASSIFICATION</span>
+            <h1>光復行政團隊 AI 應用實務分類</h1>
+            <div class="cover-divider"></div>
+            <p class="cover-subtitle">圖文生成・Vibe Coding 網頁・AI Agent 三大應用解析</p>
+            <div class="cover-meta">
+              <span>報告人：光復國小行政團隊</span>
+              <span>報告日期：2026 年 6 月 3 日</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 2: Category 1 - AI Graphic & Text Generation -->
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <span class="slide-tag">AI Classification 01</span>
+              <h2>AI 圖文的生成：文書提煉與成果手冊排版</h2>
+            </div>
+            <span class="badge-solid">圖文生成</span>
+          </div>
+          <div class="slide-body">
+            <div class="grid-2">
+              <div class="grid-list">
+                <div class="card">
+                  <div class="card-title">公文要旨與承辦摘要</div>
+                  <p class="card-text">針對每日繁雜公文，運用 AI 提取承辦重點、辦理期限與會辦單位，並自動草擬公文答覆初稿字句。</p>
+                </div>
+                <div class="card">
+                  <div class="card-title">計畫草擬與結案成果撰寫</div>
+                  <p class="card-text">結合舊案架構、相片清單及數據，由 AI 快速產出活動計畫書初稿與結案成果段落，有效節省文書撰寫時間。</p>
+                </div>
+                <div class="card accent">
+                  <div class="card-title">會議紀錄與多版本宣導文案</div>
+                  <p class="card-text">語音逐字稿自動重組，提取決議事項與待辦分工；並將成果改寫為家長、官網等多語氣宣導圖文。</p>
+                </div>
+              </div>
+              
+              <!-- Image Card: General Affairs -->
+              <div class="img-card">
+                <div class="img-wrapper">
+                  <img src="assets/20260527163531198-總務處AI實務.png" alt="總務處AI實務">
+                </div>
+                <div class="img-label">
+                  <span class="img-title">📂 總務處 AI 實務應用實績</span>
+                  <a href="assets/20260527163531198-總務處AI實務.png" target="_blank" class="card-link">檢視大圖 ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <span>光復國小行政團隊 AI 應用與分類簡報</span>
+            <span>01 / 03</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 3: Category 2 - AI Vibe Coding Web Pages & Tools -->
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <span class="slide-tag">AI Classification 02</span>
+              <h2>AI Vibe Coding 網頁與工具：快速解決特定校務需求</h2>
+            </div>
+            <span class="badge-solid">Vibe Coding 網頁</span>
+          </div>
+          <div class="slide-body">
+            <div class="grid-2">
+              <div class="grid-list">
+                <div class="card">
+                  <div class="card-title">智慧教室座位編配系統 & 教師職級務分配系統</div>
+                  <p class="card-text">依據多元學習需求因子的座位智慧編配系統，以及教師班級職務與課表分配系統。</p>
+                  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <a href="https://gemini.google.com/share/3c484410f96a" target="_blank" class="card-link">座位編配 ↗</a>
+                    <a href="https://teacher-duty.pages.dev" target="_blank" class="card-link">職級務分配 ↗</a>
+                    <a href="https://teaching-3b748.web.app/index.html" target="_blank" class="card-link">網頁設計和部署 ↗</a>
+                  </div>
+                </div>
+                <div class="card accent">
+                  <div class="card-title">課堂言談分析 (CDA) 系統 & SLC DIE Mode</div>
+                  <p class="card-text">分析課堂師生對話言談結構（CDA）的網站，以及學習共同體互動分析工具。</p>
+                  <div style="display:flex; gap:8px;">
+                    <a href="https://koufu-cda-2026.web.app/" target="_blank" class="card-link">CDA 分析 ↗</a>
+                    <a href="https://slc-die-mode.web.app/" target="_blank" class="card-link">SLC 工具 ↗</a>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-title">學力檢測與會考大數據分析網頁</div>
+                  <p class="card-text">跨年度、跨科目之國小能力檢測（110-114）與國中會考（111-115）互動趨勢圖表網頁。</p>
+                  <div style="display:flex; gap:8px;">
+                    <a href="https://jh-entrance-ex.web.app/" target="_blank" class="card-link">會考分析 ↗</a>
+                    <a href="https://primary-school-ability-test.web.app/" target="_blank" class="card-link">能力檢測 ↗</a>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Two column subgrid for Vibe Coding screenshots -->
+              <div style="display:grid; grid-template-rows: 1fr 1fr; gap:12px; height:100%;">
+                <div class="img-card">
+                  <div class="img-wrapper" style="max-height: 180px;">
+                    <img src="assets/vibe_coding_screenshot_duty.png" alt="教師職務分配與班級管理系統">
+                  </div>
+                  <div class="img-label" style="padding: 6px 12px;">
+                    <span class="img-title" style="font-size:0.98rem;">🖥️ 教師職務分配與班級管理系統</span>
+                    <a href="assets/vibe_coding_screenshot_duty.png" target="_blank" class="card-link" style="padding: 3px 6px; font-size:0.88rem;">放大 ↗</a>
+                  </div>
+                </div>
+                
+                <div class="img-card">
+                  <div class="img-wrapper" style="max-height: 180px;">
+                    <img src="assets/vibe_coding_screenshot_data.png" alt="學力與會考趨勢大數據分析儀表板">
+                  </div>
+                  <div class="img-label" style="padding: 6px 12px;">
+                    <span class="img-title" style="font-size:0.98rem;">📊 學力與會考趨勢大數據分析儀表板</span>
+                    <a href="assets/vibe_coding_screenshot_data.png" target="_blank" class="card-link" style="padding: 3px 6px; font-size:0.88rem;">放大 ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <span>光復國小行政團隊 AI 應用與分類簡報</span>
+            <span>02 / 03</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 4: Category 3 - AI Agent Applications -->
+        <div class="slide">
+          <div class="slide-header">
+            <div>
+              <span class="slide-tag">AI Classification 03</span>
+              <h2>AI Agent 應用：自主流程執行與複雜數據比對</h2>
+            </div>
+            <span class="badge-solid">AI Agent 代理</span>
+          </div>
+          <div class="slide-body">
+            <div class="grid-2">
+              <div class="grid-list">
+                <div class="card">
+                  <div class="card-title">何謂校務 AI Agent？</div>
+                  <p class="card-text">
+                    AI Agent 具備自主運算與工具調用的能力。能在人為設定下，自主連結表單並處理多步驟的工作，自動交叉比對產出報表，實現行政流程的高度減量。
+                  </p>
+                </div>
+                <div class="card success">
+                  <div class="card-title">會計 Agent：加班費與時數計算</div>
+                  <p class="card-text">
+                    利用校務自動化比對工具，自動比對加班簽到退表與教職員名冊，核算個別時薪與時數，並自動產生符合官方格式的加班費印領清冊 Excel。
+                  </p>
+                </div>
+                <div class="card accent">
+                  <div class="card-title">人事與輔導 Agent：業務檢核與特教時數</div>
+                  <p class="card-text">
+                    自動交叉比對人事名冊、時數申報及進行去識別化處理。自動核對特教助理員年資與合理性，防範重複申報，大幅縮減人工審查時間，實現全自動安全檢核流程。
+                  </p>
+                </div>
+              </div>
+              
+              <!-- Two column subgrid for Accounting & Personnel pictures -->
+              <div style="display:grid; grid-template-rows: 1fr 1fr; gap:12px; height:100%;">
+                <div class="img-card">
+                  <div class="img-wrapper" style="max-height: 180px;">
+                    <img src="assets/20260527164741065-AI行政作業前後比較會計.png" alt="會計行政前後對照">
+                  </div>
+                  <div class="img-label" style="padding: 6px 12px;">
+                    <span class="img-title" style="font-size:0.98rem;">📈 會計 AI 行政前後對照</span>
+                    <a href="assets/20260527164741065-AI行政作業前後比較會計.png" target="_blank" class="card-link" style="padding: 3px 6px; font-size:0.88rem;">放大 ↗</a>
+                  </div>
+                </div>
+                
+                <div class="img-card">
+                  <div class="img-wrapper" style="max-height: 180px;">
+                    <img src="assets/20260528094017657-1150528  AI導入人事業務圖表.png" alt="人事行政導入圖表">
+                  </div>
+                  <div class="img-label" style="padding: 6px 12px;">
+                    <span class="img-title" style="font-size:0.98rem;">📊 人事 AI 業務檢核圖表</span>
+                    <a href="assets/20260528094017657-1150528  AI導入人事業務圖表.png" target="_blank" class="card-link" style="padding: 3px 6px; font-size:0.88rem;">放大 ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            <span>光復國小行政團隊 AI 應用與分類簡報</span>
+            <span>03 / 03</span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Bottom controls -->
+  <div class="deck-controls">
+    <button class="btn-control" id="prev-btn" onclick="prevSlide()" disabled>
+      <span>← 上一張</span>
+    </button>
+    <div class="slide-progress-container">
+      <div class="slide-counter" id="slide-num">1 / 4</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+    </div>
+    <button class="btn-control" id="next-btn" onclick="nextSlide()">
+      <span>下一張 →</span>
+    </button>
+  </div>
+
+  <script>
+    // Slide Navigation Logic
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const menuItems = document.querySelectorAll('.slide-menu-item');
+    const totalSlides = slides.length;
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const slideNumLabel = document.getElementById('slide-num');
+    const progressBarFill = document.getElementById('progress-bar');
+
+    function updateControls() {
+      // Update Slide visibility
+      slides.forEach((slide, idx) => {
+        slide.classList.remove('active', 'prev-active');
+        if (idx === currentSlide) {
+          slide.classList.add('active');
+        } else if (idx === currentSlide - 1) {
+          slide.classList.add('prev-active');
+        }
+      });
+
+      // Update Sidebar Active state
+      menuItems.forEach((item, idx) => {
+        if (idx === currentSlide) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      // Enable/Disable buttons
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === totalSlides - 1;
+
+      // Update progress labels
+      slideNumLabel.innerText = `${currentSlide + 1} / ${totalSlides}`;
+      const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+      progressBarFill.style.width = `${progressPercent}%`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateControls();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateControls();
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        updateControls();
+      }
+    }
+
+    // Keyboard controls
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight' || event.key === 'Space' || event.code === 'Space') {
+        nextSlide();
+      } else if (event.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    // Initialize
+    updateControls();
+  </script>
+</body>
+</html>
